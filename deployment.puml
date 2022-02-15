@@ -19,7 +19,7 @@ node DockerHost  {
         node "apache/tika" <<image>>
     }
     node Gotenberg <<optional service>> {
-        node "gthecodingmachine/gotenberg" <<image>>
+        node "thecodingmachine/gotenberg" <<image>>
     }
  
     Postgres -[dashed]-> pgdata : "uses volume"
