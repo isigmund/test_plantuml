@@ -7,10 +7,10 @@ node DockerHost  {
     node pgdata <<volume>>
     node media <<volume>>
     node data <<volume>>
+    node export <<volume>>
+    node consume <<volume>>
     node Webserver <<service>> {
         node paperless_ng <<image>>
-        node consume <<volume>>
-        node export <<volume>>
     }
     node Broker <<service>> {
         node Redis <<image>>
