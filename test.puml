@@ -1,3 +1,4 @@
+@startuml
 node DockerHost  {
  
     node Database <<service>> {
@@ -32,3 +33,4 @@ node DockerHost  {
     paperless_ng <--> Tika : uses
  
 }
+@enduml
