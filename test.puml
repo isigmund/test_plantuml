@@ -1,8 +1,34 @@
-@startuml component
-actor client
-node app
-database db
-
-db -> app
-app -> client
-@enduml
+node DockerHost  {
+ 
+    node Database <<service>> {
+        node Postgres <<image>>
+    }
+    node pgdata <<volume>>
+    node media <<volume>>
+    node data <<volume>>
+    node Webserver <<service>> {
+        node paperless_ng <<image>>
+        node consume <<volume>>
+        node export <<volume>>
+    }
+    node Broker <<service>> {
+        node Redis <<image>>
+    }
+    node Tika  <<optional service>> {
+        node "apache/tika" <<image>>
+    }
+    node Gotenberg <<optional service>> {
+        node "gthecodingmachine/gotenberg" <<image>>
+    }
+ 
+    Postgres -[dashed]-> pgdata : "uses volume"
+    paperless_ng -[dashed]-> consume  :"uses volume"
+    paperless_ng -[dashed]-> export : "uses volume"
+    paperless_ng -[dashed]-> data : "uses volume"
+    paperless_ng -[dashed]-> media : "uses volume"
+    paperless_ng <--> Database : uses
+    paperless_ng <--> Broker  : uses
+    paperless_ng <--> Gotenberg : uses
+    paperless_ng <--> Tika : uses
+ 
+}
